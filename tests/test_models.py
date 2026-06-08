@@ -1,5 +1,5 @@
 import pytest
-from model.models import userdata, jwt_blacklist, refreshSession
+from tokenly.model.models import userdata, jwt_blacklist, refreshSession
 from datetime import datetime
 
 def test_userdata_creation():

@@ -5,7 +5,7 @@ enforcing rotation policies.
 """
 
 from datetime import datetime, timezone
-from model.models import refreshSession, userdata
+from tokenly.model.models import refreshSession, userdata
 from sqlmodel import select, Session
 import hashlib
 

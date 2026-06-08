@@ -3,7 +3,7 @@ Validation module for checking the structural integrity of user credentials.
 Ensures that usernames and passwords meet specific length and complexity requirements.
 """
 
-from model.models import userdata
+from tokenly.model.models import userdata
 from functools import wraps
 
 def validate_creds_structure(func):

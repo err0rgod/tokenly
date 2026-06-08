@@ -5,8 +5,8 @@ by tracking failed attempts and locking accounts temporarily.
 """
 
 from argon2 import PasswordHasher
-from model.models import userdata, refreshSession
-from validations.structure import validate_creds_structure 
+from tokenly.model.models import userdata, refreshSession
+from tokenly.validations.structure import validate_creds_structure 
 from datetime import datetime, timedelta, timezone
 import logging
 from sqlmodel import Session, select

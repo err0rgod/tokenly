@@ -26,7 +26,7 @@ pip install sqlmodel pyjwt argon2-cffi
 Tokenly uses SQLModel, allowing for easy database integration. You can use the provided `DatabaseManager` to initialize your database.
 
 ```python
-from database import DatabaseManager
+from tokenly import DatabaseManager
 
 db = DatabaseManager(db_url="sqlite:///./auth.db")
 
@@ -42,8 +42,7 @@ with next(db.get_session()) as session:
 ### 2. Password Hashing and Verification
 
 ```python
-from model.models import userdata
-from secure.hashed import hash_password, verifyPassword
+from tokenly import userdata, hash_password, verifyPassword
 
 # Create a user object
 user = userdata(
@@ -59,19 +58,19 @@ hash_password(user)
 is_valid = verifyPassword(user, "MySecurePassword123!")
 ```
 
-### 2. JWT Generation
+### 3. JWT Generation
 
 ```python
-from session.jwt_handler import jwtHandler
+from tokenly import jwtHandler
 
 handler = jwtHandler(SECRET_KEY="your_secret_key", algorithm="HS256")
 access_token, raw_refresh, session_obj = handler.createJwt(user)
 ```
 
-### 3. Protecting Routes
+### 4. Protecting Routes
 
 ```python
-from session.middleware import require_auth
+from tokenly import require_auth
 
 @require_auth(jwt_handler=handler)
 def get_user_profile(payload):

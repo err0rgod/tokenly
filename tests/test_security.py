@@ -1,6 +1,6 @@
 import pytest
-from model.models import userdata
-from secure.hashed import hash_password, verifyPassword
+from tokenly.model.models import userdata
+from tokenly.secure.hashed import hash_password, verifyPassword
 from unittest.mock import MagicMock
 
 def test_password_hashing():

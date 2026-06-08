@@ -5,7 +5,7 @@ Provides functionality for creating access tokens and refresh session objects.
 
 import hashlib
 import jwt
-from model.models import userdata, refreshSession
+from tokenly.model.models import userdata, refreshSession
 from datetime import datetime, timedelta, timezone
 import uuid
 import logging
