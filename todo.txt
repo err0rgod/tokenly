@@ -1,10 +1,29 @@
+# Tokenly Development Roadmap
 
-   3. Role-Based Access Control (RBAC):
-      * Missing: Adding a role (Admin, User, Manager) to userdata.
-      * Missing: A decorator like @require_role("Admin") to protect specific endpoints.
+## Phase 1: Core Security Enhancements (Selected)
 
-   4. Multi-Factor Auth (MFA / 2FA):
-      * Missing: TOTP integration (Google Authenticator) using a library like pyotp.
+1. Role-Based Access Control (RBAC):
+   - Add `role` field (e.g., Admin, User, Moderator) to `userdata` model.
+   - Implement `@require_role` decorator that integrates with `@require_auth`.
 
-   5. Token Delivery Helpers:
-      * Missing: Utility functions to set secure cookies (HttpOnly, Secure, SameSite=Lax) because passing JWTs in JSON bodies and storing them in LocalStorage is vulnerable to XSS.
+2. Session Management & Device Tracking:
+   - Add `user_agent` and `ip_address` to `refreshSession` model.
+   - Add functionality to list all active sessions for a user.
+   - Implement "Logout from all devices" by revoking all non-expired tokens for a `user_id`.
+
+3. Audit Logging (Security Events):
+   - Create an `AuditLog` table to track sensitive events.
+   - Automatically log: Password changes, account lockouts, and suspicious login attempts.
+
+4. Automatic Cleanup (Housekeeping):
+   - Create a utility function to purge expired `jwt_blacklist` entries and `refreshSession` records.
+   - Ensure the database remains lightweight over time.
+
+5. Account Status Management (Soft Delete):
+   - Add `is_active` or `status` (Active, Suspended, Deactivated) field to `userdata`.
+   - Update middleware and login logic to block access for non-active accounts.
+
+## Phase 2: Miscellaneous (Optional/Future)
+
+- Secure Cookie Helpers for browser-based clients.
+- Password history tracking (Prevent re-use of last N passwords).

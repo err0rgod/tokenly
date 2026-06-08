@@ -1,0 +1,33 @@
+[build-system]
+requires = ["setuptools>=61.0"]
+build-backend = "setuptools.build_meta"
+
+[project]
+name = "tokenly-auth"
+version = "0.1.0"
+authors = [
+  { name="Nirbhay Katiyar", email="nirbhayerror@gmail.com" },
+]
+description = "A professional-grade hybrid lightweight authentication and session management library."
+readme = "README.md"
+requires-python = ">=3.8"
+classifiers = [
+    "Programming Language :: Python :: 3",
+    "License :: OSI Approved :: MIT License",
+    "Operating System :: OS Independent",
+    "Topic :: Security",
+    "Framework :: Pydantic",
+]
+dependencies = [
+    "sqlmodel>=0.0.14",
+    "pyjwt>=2.8.0",
+    "argon2-cffi>=23.1.0",
+]
+
+[project.urls]
+"Homepage" = "https://github.com/err0rgod/tokenly"
+"Bug Tracker" = "https://github.com/err0rgod/tokenly/issues"
+
+[tool.setuptools.packages.find]
+where = ["."]
+include = ["tokenly*"]
