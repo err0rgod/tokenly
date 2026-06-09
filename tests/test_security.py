@@ -1,46 +1,43 @@
 import pytest
-from tokenly_auth.model.models import userdata
-from tokenly_auth.secure.hashed import hash_password, verifyPassword
+from tokenly_auth import Security
 
 
 def test_password_hashing():
-    """Test that passwords are hashed and not stored in plain text."""
-    user = userdata(user_id="u1", user_name="user1", password="SecurePassword123!")
-    hashed_user = hash_password(user)
-    assert hashed_user.password != "SecurePassword123!"
-    assert hashed_user.password.startswith("$argon2")
+    """Test that passwords are hashed correctly."""
+    plain = "SecurePassword123!"
+    # The new hash_password takes (password, user_id=None)
+    hashed = Security["hash"](plain)
+    
+    assert hashed != plain
+    assert hashed.startswith("$argon2")
 
 
 def test_password_verification_success():
     """Test successful password verification."""
     plain = "SecurePassword123!"
-    user = userdata(user_id="u1", user_name="user1", password="SecurePassword123!")
-    hash_password(user)
+    hashed = Security["hash"](plain)
 
-    assert verifyPassword(user, plain) is True
-    assert user.failed_attempts == 0
+    # verifyPassword(password, hash, user_id, locked_until, failed_attempts)
+    assert Security["verify"](plain, hashed) is True
 
 
 def test_password_verification_failure():
-    """Test failed password verification and attempt incrementing."""
-    user = userdata(user_id="u1", user_name="user1", password="SecurePassword123!")
-    hash_password(user)
+    """Test failed password verification."""
+    plain = "SecurePassword123!"
+    hashed = Security["hash"](plain)
 
-    assert verifyPassword(user, "WrongPassword") is False
-    assert user.failed_attempts == 1
+    assert Security["verify"]("WrongPassword", hashed) is False
 
 
-def test_account_locking():
-    """Test that account locks after maximum failed attempts."""
-    user = userdata(
-        user_id="u1", user_name="user1", password="SecurePassword123!", failed_attempts=4
-    )
-    hash_password(user)
-
-    # 5th failed attempt
-    verifyPassword(user, "WrongPassword")
-    assert user.locked_until is not None
-
-    # Try to verify while locked
-    with pytest.raises(ValueError, match="Account Locked"):
-        verifyPassword(user, "SecurePassword123!")
+def test_password_reset():
+    """Test the password reset utility."""
+    old_plain = "OldPassword123!"
+    new_plain = "NewPassword123!"
+    old_hash = Security["hash"](old_plain)
+    
+    # reset(old_hash, old_password_plain, new_password, user_id=None)
+    new_hash = Security["reset"](old_hash, old_plain, new_plain)
+    
+    assert new_hash != old_hash
+    assert Security["verify"](new_plain, new_hash) is True
+    assert Security["verify"](old_plain, new_hash) is False

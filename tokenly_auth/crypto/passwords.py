@@ -5,7 +5,7 @@ by tracking failed attempts and locking accounts temporarily.
 """
 
 from argon2 import PasswordHasher
-from tokenly_auth.validations.structure import validate_creds_structure
+from tokenly_auth.validators.credentials import validate_creds_structure
 from datetime import datetime, timedelta, timezone
 import logging
 # from sqlmodel import Session, select
@@ -15,25 +15,23 @@ ph = PasswordHasher()
 logger = logging.getLogger(__name__)
 
 
-@validate_creds_structure
-def hash_password(password: str, user_id : str | None = None) -> str:
+def hash_password(password: str, user_id: str | None = None) -> str:
     """
     Hashes the user's password using Argon2.
 
     Args:
-        User (userdata): The user object containing the plain-text password.
+        password (str): The plain-text password to hash.
+        user_id (str, optional): Optional identifier for logging.
 
     Returns:
-        userdata: The user object with the password replaced by its hash.
+        str: The hashed password.
     """
     if user_id:
         logger.info(f"Hashed password of {user_id}")
-    hash = ph.hash(password)
-    password = hash
-    return password
+    return ph.hash(password)
 
 
-def verifyPassword(password: str, hash: str, user_id : str | None = None,locked_until : datetime | None = None, failed_attemps : int | None = None) -> bool:
+def verifyPassword(password: str, hash: str, user_id : str | None = None,locked_until : datetime | None = None) -> bool:
     """
     Verifies a plain-text password against a stored hash and implements brute-force protection.
 
