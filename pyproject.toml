@@ -21,6 +21,8 @@ dependencies = [
     "pyjwt>=2.8.0",
     "argon2-cffi>=23.1.0",
 ]
+
+[project.urls]
 "Homepage" = "https://github.com/err0rgod/tokenly"
 "Bug Tracker" = "https://github.com/err0rgod/tokenly/issues"
 
