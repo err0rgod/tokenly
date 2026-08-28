@@ -6,6 +6,8 @@ Ensures that usernames and passwords meet specific length and complexity require
 from functools import wraps
 
 
+
+
 def validate_creds_structure(func):
     """
     Decorator to validate the structure of user credentials (username and password).

@@ -61,6 +61,10 @@ def verifyPassword(password: str, hash: str, user_id: Optional[str] = None, lock
         return False
 
 
+
+
+        
+
 def resetPassword(old_hash: str, old_password_plain: str, new_password: str, user_id: Optional[str] = None) -> str:
     """
     Utility to verify old password and generate a new hash.
