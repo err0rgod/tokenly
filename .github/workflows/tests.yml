@@ -1,26 +1,55 @@
 name: Tests
 
-on: [push, pull_request]
+on:
+  push:
+    branches: [main]
+  pull_request:
+  workflow_dispatch:
+
+permissions:
+  contents: read
+
+concurrency:
+  group: tests-${{ github.ref }}
+  cancel-in-progress: true
 
 jobs:
   test:
-    runs-on: ubuntu-latest
+    name: py${{ matrix.python-version }} / ${{ matrix.os }}
+    runs-on: ${{ matrix.os }}
     strategy:
+      fail-fast: false
       matrix:
-        python-version: ["3.8", "3.9", "3.10", "3.11", "3.12"]
+        os: [ubuntu-latest]
+        python-version: ["3.9", "3.10", "3.11", "3.12", "3.13"]
+        include:
+          - os: macos-latest
+            python-version: "3.12"
 
     steps:
       - uses: actions/checkout@v4
+
       - name: Set up Python ${{ matrix.python-version }}
         uses: actions/setup-python@v5
         with:
           python-version: ${{ matrix.python-version }}
-      
-      - name: Install dependencies
+          cache: pip
+          cache-dependency-path: pyproject.toml
+
+      - name: Install package and test deps
         run: |
           python -m pip install --upgrade pip
-          pip install . pytest
-      
+          pip install -e ".[dev]"
+
+      - name: Lint (ruff)
+        run: ruff check .
+
       - name: Run tests
+        run: pytest -q --cov=tokenly_auth --cov-report=term-missing
+
+      - name: Smoke-test the built wheel
         run: |
-          pytest tests/
+          python -m build --wheel
+          python -m venv /tmp/wheeltest
+          /tmp/wheeltest/bin/pip install --quiet dist/*.whl
+          /tmp/wheeltest/bin/python -c "import tokenly_auth; print('import ok, version', tokenly_auth.__version__)"

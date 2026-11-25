@@ -1,0 +1,64 @@
+name: Bug report
+description: Something behaves incorrectly — a failing snippet is the fastest path to a fix.
+title: "bug: "
+labels: ["bug"]
+body:
+  - type: markdown
+    attributes:
+      value: |
+        Thanks for taking the time to report this. Please **do not** report security
+        vulnerabilities here — use [SECURITY.md](https://github.com/err0rgod/tokenly/blob/main/SECURITY.md) instead.
+
+  - type: input
+    id: version
+    attributes:
+      label: Tokenly Auth version
+      description: Output of `python -c "import tokenly_auth; print(tokenly_auth.__version__)"`
+      placeholder: "1.1.4"
+    validations:
+      required: true
+
+  - type: input
+    id: python
+    attributes:
+      label: Python version and OS
+      placeholder: "3.12.4 on Ubuntu 24.04"
+    validations:
+      required: true
+
+  - type: textarea
+    id: what-happened
+    attributes:
+      label: What happened
+      description: The actual behaviour, including the full traceback if there is one.
+    validations:
+      required: true
+
+  - type: textarea
+    id: expected
+    attributes:
+      label: What you expected
+    validations:
+      required: true
+
+  - type: textarea
+    id: repro
+    attributes:
+      label: Minimal reproduction
+      description: A copy-pasteable snippet. Trim it to the smallest thing that still fails.
+      render: python
+      placeholder: |
+        from tokenly_auth import TokenHandler
+
+        handler = TokenHandler(SECRET_KEY="x" * 32)
+        print(handler.createJwt(sub="u1"))
+    validations:
+      required: true
+
+  - type: textarea
+    id: extra
+    attributes:
+      label: Anything else
+      description: Workarounds you tried, related issues, or your environment quirks.
+    validations:
+      required: false

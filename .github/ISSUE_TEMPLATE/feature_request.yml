@@ -1,0 +1,59 @@
+name: Feature request
+description: Propose a primitive or capability. Describe the problem first, the API second.
+title: "feat: "
+labels: ["enhancement"]
+body:
+  - type: markdown
+    attributes:
+      value: |
+        Tokenly is deliberately small. Features are judged on whether they can stay
+        **database-agnostic and framework-agnostic** — if the answer needs your ORM or your
+        web framework, it belongs in your app, not here.
+
+  - type: textarea
+    id: problem
+    attributes:
+      label: The problem
+      description: What are you unable to do today? Describe the application, not the solution.
+    validations:
+      required: true
+
+  - type: textarea
+    id: proposal
+    attributes:
+      label: Proposed API
+      description: A sketch is enough — it will be discussed before anyone writes code.
+      render: python
+    validations:
+      required: false
+
+  - type: textarea
+    id: alternatives
+    attributes:
+      label: Alternatives considered
+      description: Existing libraries, workarounds, or why they do not fit.
+    validations:
+      required: false
+
+  - type: checkboxes
+    id: constraints
+    attributes:
+      label: Constraints check
+      options:
+        - label: This does not require a new runtime dependency
+          required: false
+        - label: This does not require a database or ORM inside the library
+          required: false
+        - label: This does not tie the library to a specific web framework
+          required: false
+
+  - type: dropdown
+    id: contribute
+    attributes:
+      label: Would you like to implement it?
+      options:
+        - "Yes, with guidance"
+        - "Yes, on my own"
+        - "No, just proposing"
+    validations:
+      required: true
