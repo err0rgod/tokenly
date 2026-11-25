@@ -2,6 +2,8 @@ from tokenly_auth.crypto.passwords import (
     hash_password,
     verifyPassword,
     resetPassword,
+    needs_password_rehash,
+    verify_and_rehash,
 )
 from tokenly_auth.tokens.jwt import jwtHandler
 from tokenly_auth.tokens.refresh import RefreshManager
@@ -14,6 +16,8 @@ Security = {
     "hash": hash_password,
     "verify": verifyPassword,
     "reset": resetPassword,
+    "needs_rehash": needs_password_rehash,
+    "verify_and_rehash": verify_and_rehash,
 }
 
 # Standardized Naming Aliases
@@ -25,6 +29,8 @@ __all__ = [
     "hash_password",
     "verifyPassword",
     "resetPassword",
+    "needs_password_rehash",
+    "verify_and_rehash",
     "jwtHandler",
     "RefreshManager",
     "RateLimiter",

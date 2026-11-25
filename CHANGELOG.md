@@ -7,6 +7,12 @@ adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0.html).
 ## [Unreleased]
 
 ### Added
+- `needs_password_rehash(stored_hash)` and `verify_and_rehash(password, stored_hash)` in
+  `tokenly_auth/crypto/passwords.py`: hash-upgrade detection backed by
+  `argon2.PasswordHasher.check_needs_rehash`.  Both are exposed via the `Security` dict
+  (`Security["needs_rehash"]` / `Security["verify_and_rehash"]`) and added to `__all__`.
+- `tests/test_rehash.py`: pytest suite covering current/weak/malformed hashes,
+  verify-and-rehash paths, and `Security` alias wiring.
 - Wheel smoke test in CI (installs the built wheel into a clean venv and imports it).
 - `pytest-cov`, `ruff`, and local `build`/`twine` in a `dev` extra; coverage config with branch coverage.
 - Executable README examples (`tests/test_docs_examples.py`) so documented snippets cannot rot.
