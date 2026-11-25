@@ -1,4 +1,3 @@
-import pytest
 from tokenly_auth import Security
 
 

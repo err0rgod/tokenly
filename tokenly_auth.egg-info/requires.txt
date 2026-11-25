@@ -1,2 +1,0 @@
-pyjwt>=2.8.0
-argon2-cffi>=23.1.0

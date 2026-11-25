@@ -1,0 +1,11 @@
+blank_issues_enabled: false
+contact_links:
+  - name: Security vulnerability
+    url: https://github.com/err0rgod/tokenly/security/advisories/new
+    about: Report privately — never in a public issue.
+  - name: Documentation
+    url: https://err0rgod.github.io/tokenly-auth-docs/
+    about: Guides, framework adapters, and API reference.
+  - name: Question / usage help
+    url: https://github.com/err0rgod/tokenly/discussions
+    about: Ask here instead of opening an issue.
