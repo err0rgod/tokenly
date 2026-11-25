@@ -19,12 +19,16 @@ jobs:
     runs-on: ${{ matrix.os }}
     strategy:
       fail-fast: false
+      # ubuntu-latest is 26.04 and setup-python has no 3.9 build for it, so the
+      # older interpreter is pinned to an older runner image.
       matrix:
-        os: [ubuntu-latest]
-        python-version: ["3.9", "3.10", "3.11", "3.12", "3.13"]
         include:
-          - os: macos-latest
-            python-version: "3.12"
+          - { os: ubuntu-22.04,  python-version: "3.9" }
+          - { os: ubuntu-latest, python-version: "3.10" }
+          - { os: ubuntu-latest, python-version: "3.11" }
+          - { os: ubuntu-latest, python-version: "3.12" }
+          - { os: ubuntu-latest, python-version: "3.13" }
+          - { os: macos-latest,  python-version: "3.12" }
 
     steps:
       - uses: actions/checkout@v4
